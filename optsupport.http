@@ -1,0 +1,6 @@
+@optsupport_HostAddress = http://localhost:5081
+
+GET {{optsupport_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
