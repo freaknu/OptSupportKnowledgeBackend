@@ -7,6 +7,7 @@ namespace KnowledgeBaseAPI.Data
     {
         public static void Initialize(KnowledgeBaseContext context)
         {
+
             if (!context.Categories.Any())
             {
                 var categories = new List<Category>
@@ -179,7 +180,52 @@ namespace KnowledgeBaseAPI.Data
                 }
                 context.SaveChanges();
             }
+            if (!context.Products.Any())
+            {
+                var products = new List<Product>
+                {
+                    new Product
+                    {
+                        product_name = "Erp9i RetailGraph",
+                        product_description = "Comprehensive retail management solution",
+                        short_description = "Retail ERP System",
+                        logo = "https://erp9i.com/assets/img/icons/logo.png",
+                        path = "/erp9i-retailgraph",
+                        product_image = "https://example.com/retailgraph-banner.jpg",
+                        moto = "Transform Your Retail Business",
+                        log = "Initial product entry",
+                        isactive = true,
+                        create_date = DateTime.Now,
+                        create_by = 1,
+                        modify_by = 1,
+                        modify_date = DateTime.Now,
+                        ip_address = "192.168.1.1",
+                        unq_code = "ERP9I-RG-2024"
+                    },
+                    new Product
+                    {
+                        product_name = "Erp9iPOS",
+                        product_description = "Point of Sale system for retail businesses",
+                        short_description = "POS System",
+                        logo = "https://optsfa.in/images/logo2.png",
+                        path = "/erp9ipos",
+                        product_image = "https://example.com/pos-banner.jpg",
+                        moto = "Streamline Your Sales",
+                        log = "POS system entry",
+                        isactive = true,
+                        create_date = DateTime.Now,
+                        create_by = 1,
+                        modify_by = 1,
+                        modify_date = DateTime.Now,
+                        ip_address = "192.168.1.1",
+                        unq_code = "ERP9I-POS-2024"
+                    }
+                };
+                context.Products.AddRange(products);
+                context.SaveChanges();
+            }
         }
+
 
         private static InventoryData CreateInventoryDataForArticle(Article article)
         {

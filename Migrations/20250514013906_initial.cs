@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace optsupport.Migrations
 {
     /// <inheritdoc />
-    public partial class initialcreate : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -22,6 +23,33 @@ namespace optsupport.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Products",
+                columns: table => new
+                {
+                    product_id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    product_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    product_description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    short_description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    logo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    path = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    product_image = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    moto = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    log = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    isactive = table.Column<bool>(type: "bit", nullable: false),
+                    create_date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    create_by = table.Column<int>(type: "int", nullable: false),
+                    modify_by = table.Column<int>(type: "int", nullable: false),
+                    modify_date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ip_address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    unq_code = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Products", x => x.product_id);
                 });
 
             migrationBuilder.CreateTable(
@@ -117,6 +145,9 @@ namespace optsupport.Migrations
         {
             migrationBuilder.DropTable(
                 name: "InventoryImages");
+
+            migrationBuilder.DropTable(
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "InventoryData");

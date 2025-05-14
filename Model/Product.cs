@@ -18,6 +18,5 @@ namespace optsupport.Model
         public DateTime modify_date { get; set; }
         public string ip_address { get; set; } = string.Empty;
         public string unq_code { get; set; } = string.Empty;
-
     }
 }

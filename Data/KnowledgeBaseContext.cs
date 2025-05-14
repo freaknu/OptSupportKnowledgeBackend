@@ -13,9 +13,16 @@ namespace KnowledgeBaseAPI.Data
         public DbSet<Article> Articles { get; set; }
         public DbSet<InventoryData> InventoryData { get; set; }
         public DbSet<InventoryImage> InventoryImages { get; set; }
-
+        public DbSet<Product> Products { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Product>(entity =>
+            {
+                entity.HasKey(p => p.product_id);
+            });
+            modelBuilder.Entity<Product>()
+                .Property(p => p.product_id)
+                .ValueGeneratedOnAdd();
             modelBuilder.Entity<InventoryData>()
                 .HasOne<Article>()
                 .WithOne(a => a.InventoryData)
