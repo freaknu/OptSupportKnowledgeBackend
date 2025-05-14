@@ -45,10 +45,8 @@ namespace KnowledgeBaseAPI.Controllers
         public async Task<ActionResult<InventoryDataDTO>> GetInventoryData(string articleId)
         {
             var inventoryData = await _context.InventoryData
-                .Include(id => id.ProcessSteps)
-                .Include(id => id.Prerequisites)
-                .Include(id => id.Images)
                 .Include(id => id.Article)
+                .Include(id => id.Images)
                 .FirstOrDefaultAsync(id => id.ArticleId == articleId);
 
             if (inventoryData == null)
@@ -58,22 +56,42 @@ namespace KnowledgeBaseAPI.Controllers
 
             return Ok(new InventoryDataDTO
             {
-                Id = inventoryData.ArticleId,
+                Id = inventoryData.Id,
+                ArticleId = inventoryData.ArticleId,
                 Title = inventoryData.Title,
-                Overview = inventoryData.Overview,
-                ProcessSteps = inventoryData.ProcessSteps.Select(ps => ps.Step).ToList(),
-                FormName = inventoryData.FormName,
-                Prerequisites = inventoryData.Prerequisites.Select(p => p.Requirement).ToList(),
-                ArticleLink = inventoryData.ArticleLink,
+                Content = inventoryData.Content,
+                ArticleLink = new ArticleLinkDTO
+                {
+                    Url = inventoryData.ArticleLink.Url,
+                    Text = inventoryData.ArticleLink.Text
+                },
                 Images = inventoryData.Images.Select(i => new ImageDTO
                 {
                     Url = i.Url,
                     Caption = i.Caption
                 }).ToList(),
-                Author = inventoryData.Author,
-                AppLinks = inventoryData.AppLinks
+                Author = new AuthorDTO
+                {
+                    Name = inventoryData.Author.Name,
+                    Avatar = inventoryData.Author.Avatar,
+                    LastUpdated = inventoryData.Author.LastUpdated
+                },
+                AppLinks = new AppLinksDTO
+                {
+                    PlayStore = new StoreLinkDTO
+                    {
+                        Url = inventoryData.AppLinks.PlayStore.Url,
+                        Image = inventoryData.AppLinks.PlayStore.Image
+                    },
+                    AppStore = new StoreLinkDTO
+                    {
+                        Url = inventoryData.AppLinks.AppStore.Url,
+                        Image = inventoryData.AppLinks.AppStore.Image
+                    }
+                }
             });
         }
+
         [HttpPost]
         public async Task<ActionResult<Article>> CreateInventoryArticle([FromBody] InventoryArticleDTO request)
         {
@@ -95,10 +113,7 @@ namespace KnowledgeBaseAPI.Controllers
             {
                 ArticleId = article.Id,
                 Title = request.InventoryTitle,
-                Overview = request.Overview,
-                ProcessSteps = request.ProcessSteps?.Select(ps => new ProcessStep { Step = ps })?.ToList(),
-                FormName = request.FormName,
-                Prerequisites = request.Prerequisites?.Select(p => new Prerequisite { Requirement = p })?.ToList(),
+                Content = request.Content,
                 ArticleLink = new ArticleLink
                 {
                     Url = request.ArticleLink?.Url,
@@ -106,26 +121,26 @@ namespace KnowledgeBaseAPI.Controllers
                 },
                 Images = request.Images?.Select(i => new InventoryImage
                 {
-                    Url = i?.Url,
-                    Caption = i?.Caption
-                })?.ToList(),
+                    Url = i.Url,
+                    Caption = i.Caption
+                }).ToList(),
                 Author = new Author
                 {
-                    Name = request.Author?.Name,
-                    Avatar = request.Author?.Avatar,
-                    LastUpdated = request.Author?.LastUpdated
+                    Name = request.Author.Name,
+                    Avatar = request.Author.Avatar,
+                    LastUpdated = request.Author.LastUpdated
                 },
                 AppLinks = new AppLinks
                 {
                     PlayStore = new StoreLink
                     {
-                        Url = request.AppLinks?.PlayStore?.Url,
-                        Image = request.AppLinks?.PlayStore?.Image
+                        Url = request.AppLinks.PlayStore.Url,
+                        Image = request.AppLinks.PlayStore.Image
                     },
                     AppStore = new StoreLink
                     {
-                        Url = request.AppLinks?.AppStore?.Url,
-                        Image = request.AppLinks?.AppStore?.Image
+                        Url = request.AppLinks.AppStore.Url,
+                        Image = request.AppLinks.AppStore.Image
                     }
                 }
             };

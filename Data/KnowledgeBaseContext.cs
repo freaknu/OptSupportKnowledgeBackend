@@ -1,3 +1,4 @@
+// KnowledgeBaseContext.cs
 using KnowledgeBaseAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using optsupport.Model;
@@ -11,16 +12,15 @@ namespace KnowledgeBaseAPI.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Article> Articles { get; set; }
         public DbSet<InventoryData> InventoryData { get; set; }
-        public DbSet<ProcessStep> ProcessSteps { get; set; }
-        public DbSet<Prerequisite> Prerequisites { get; set; }
         public DbSet<InventoryImage> InventoryImages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<InventoryData>()
-            .HasOne<Article>()
-            .WithOne(a => a.InventoryData)
-            .HasForeignKey<InventoryData>(id => id.ArticleId);
+                .HasOne<Article>()
+                .WithOne(a => a.InventoryData)
+                .HasForeignKey<InventoryData>(id => id.ArticleId);
+
             modelBuilder.Entity<Article>(entity =>
             {
                 entity.HasOne(a => a.Category)
@@ -37,16 +37,6 @@ namespace KnowledgeBaseAPI.Data
             modelBuilder.Entity<InventoryData>(entity =>
             {
                 entity.HasKey(id => id.Id);
-
-                entity.HasMany(id => id.ProcessSteps)
-                    .WithOne()
-                    .HasForeignKey(ps => ps.InventoryDataId)
-                    .OnDelete(DeleteBehavior.Cascade);
-
-                entity.HasMany(id => id.Prerequisites)
-                    .WithOne()
-                    .HasForeignKey(p => p.InventoryDataId)
-                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasMany(id => id.Images)
                     .WithOne()

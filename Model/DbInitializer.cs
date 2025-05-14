@@ -134,25 +134,12 @@ namespace KnowledgeBaseAPI.Data
                     var inventoryData = new InventoryData
                     {
                         ArticleId = article.Id,
-                        Title = $"{article.Title} - Inventory Management Guide",
-                        Overview = $"Comprehensive inventory management solution for {article.Title}. Maintain optimal stock levels and streamline operations.",
-                        ProcessSteps = new List<ProcessStep>
-                        {
-                            new ProcessStep { Step = "Access the relevant module in the application" },
-                            new ProcessStep { Step = "Analyze current stock levels" },
-                            new ProcessStep { Step = "Generate replenishment orders" },
-                            new ProcessStep { Step = "Confirm and submit requests" }
-                        },
-                        FormName = "Standard Inventory Form",
-                        Prerequisites = new List<Prerequisite>
-                        {
-                            new Prerequisite { Requirement = "Configure inventory settings" },
-                            new Prerequisite { Requirement = "Ensure proper user permissions" }
-                        },
+                        Title = $"{article.Title} - Comprehensive Guide",
+                        Content = $"Detailed technical documentation and best practices for {article.Title}.",
                         ArticleLink = new ArticleLink
                         {
                             Url = article.Url,
-                            Text = $"Click here to access {article.Title}"
+                            Text = $"Access {article.Title} Guide"
                         },
                         Images = new List<InventoryImage>
                         {
@@ -200,20 +187,6 @@ namespace KnowledgeBaseAPI.Data
             {
                 ArticleId = article.Id,
                 Title = $"{article.Title} Inventory Guide",
-                Overview = $"Optimized inventory management process for {article.Title}.",
-                ProcessSteps = new List<ProcessStep>
-                {
-                    new ProcessStep { Step = "Access relevant reports" },
-                    new ProcessStep { Step = "Analyze stock levels" },
-                    new ProcessStep { Step = "Generate purchase orders" },
-                    new ProcessStep { Step = "Confirm and track orders" }
-                },
-                FormName = "Inventory Management Form",
-                Prerequisites = new List<Prerequisite>
-                {
-                    new Prerequisite { Requirement = "Updated stock data" },
-                    new Prerequisite { Requirement = "Valid supplier information" }
-                },
                 ArticleLink = new ArticleLink
                 {
                     Url = article.Url,
@@ -250,13 +223,10 @@ namespace KnowledgeBaseAPI.Data
 
             if (article.Title.Contains("POS"))
             {
-                baseData.ProcessSteps.Insert(0, new ProcessStep { Step = "Open POS module" });
-                baseData.Prerequisites.Add(new Prerequisite { Requirement = "POS hardware setup" });
             }
 
             if (article.Title.Contains("SORT"))
             {
-                baseData.ProcessSteps.Add(new ProcessStep { Step = "Validate sorted items" });
                 baseData.Images.Add(new InventoryImage
                 {
                     Url = "https://support.swildesk.com/sort-image.jpg",

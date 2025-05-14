@@ -52,8 +52,7 @@ namespace optsupport.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ArticleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Overview = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FormName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ArticleLink_Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ArticleLink_Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Author_Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -96,46 +95,6 @@ namespace optsupport.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Prerequisites",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Requirement = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    InventoryDataId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Prerequisites", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Prerequisites_InventoryData_InventoryDataId",
-                        column: x => x.InventoryDataId,
-                        principalTable: "InventoryData",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProcessSteps",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Step = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    InventoryDataId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProcessSteps", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ProcessSteps_InventoryData_InventoryDataId",
-                        column: x => x.InventoryDataId,
-                        principalTable: "InventoryData",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Articles_CategoryId",
                 table: "Articles",
@@ -151,16 +110,6 @@ namespace optsupport.Migrations
                 name: "IX_InventoryImages_InventoryDataId",
                 table: "InventoryImages",
                 column: "InventoryDataId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Prerequisites_InventoryDataId",
-                table: "Prerequisites",
-                column: "InventoryDataId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProcessSteps_InventoryDataId",
-                table: "ProcessSteps",
-                column: "InventoryDataId");
         }
 
         /// <inheritdoc />
@@ -168,12 +117,6 @@ namespace optsupport.Migrations
         {
             migrationBuilder.DropTable(
                 name: "InventoryImages");
-
-            migrationBuilder.DropTable(
-                name: "Prerequisites");
-
-            migrationBuilder.DropTable(
-                name: "ProcessSteps");
 
             migrationBuilder.DropTable(
                 name: "InventoryData");

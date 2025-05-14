@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+// InventoryData.cs
 using optsupport.Model;
 
 namespace KnowledgeBaseAPI.Models
@@ -9,10 +9,7 @@ namespace KnowledgeBaseAPI.Models
         public string ArticleId { get; set; }
         public Article Article { get; set; }
         public string Title { get; set; }
-        public string Overview { get; set; }
-        public List<ProcessStep> ProcessSteps { get; set; }
-        public string FormName { get; set; }
-        public List<Prerequisite> Prerequisites { get; set; }
+        public string Content { get; set; }
         public ArticleLink ArticleLink { get; set; }
         public List<InventoryImage> Images { get; set; }
         public Author Author { get; set; }

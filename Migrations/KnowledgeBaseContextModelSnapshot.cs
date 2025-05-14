@@ -79,11 +79,7 @@ namespace optsupport.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("FormName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Overview")
+                    b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -123,50 +119,6 @@ namespace optsupport.Migrations
                     b.HasIndex("InventoryDataId");
 
                     b.ToTable("InventoryImages");
-                });
-
-            modelBuilder.Entity("optsupport.Model.Prerequisite", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("InventoryDataId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Requirement")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InventoryDataId");
-
-                    b.ToTable("Prerequisites");
-                });
-
-            modelBuilder.Entity("optsupport.Model.ProcessStep", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("InventoryDataId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Step")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InventoryDataId");
-
-                    b.ToTable("ProcessSteps");
                 });
 
             modelBuilder.Entity("KnowledgeBaseAPI.Models.Article", b =>
@@ -325,24 +277,6 @@ namespace optsupport.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("optsupport.Model.Prerequisite", b =>
-                {
-                    b.HasOne("KnowledgeBaseAPI.Models.InventoryData", null)
-                        .WithMany("Prerequisites")
-                        .HasForeignKey("InventoryDataId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("optsupport.Model.ProcessStep", b =>
-                {
-                    b.HasOne("KnowledgeBaseAPI.Models.InventoryData", null)
-                        .WithMany("ProcessSteps")
-                        .HasForeignKey("InventoryDataId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("KnowledgeBaseAPI.Models.Article", b =>
                 {
                     b.Navigation("InventoryData")
@@ -357,10 +291,6 @@ namespace optsupport.Migrations
             modelBuilder.Entity("KnowledgeBaseAPI.Models.InventoryData", b =>
                 {
                     b.Navigation("Images");
-
-                    b.Navigation("Prerequisites");
-
-                    b.Navigation("ProcessSteps");
                 });
 #pragma warning restore 612, 618
         }

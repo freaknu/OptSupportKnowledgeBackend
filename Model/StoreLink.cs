@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace optsupport.Model
 {
      public class StoreLink
-    {
+    {   
         public string Url { get; set; }
         public string Image { get; set; }
     }
